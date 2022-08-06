@@ -1,5 +1,5 @@
 /*
- * File:   Timer0 PIC18F4550.c
+ * File:   Sistema Bajo consumo PIC18F4550.c
  * Author: mario
  *
  * Created on 5 de Agosto de 2022, 08:42 AM
@@ -19,8 +19,6 @@ void __interrupt () ISR (void); //Interrupción
 
 
 void main(void) {
-  char contador=0;
-  
   OSCCON=0b11110000;//Configuración del oscilador 
   __delay_ms(1);    //Tiempo de establecimiento para el oscilador
   /* Configuración del puerto C */
@@ -29,7 +27,7 @@ void main(void) {
                      *En caso de requerir usar algun puerto analogo modificar
                      * este registro (Pag 266 datasheet)
                      */
-  TRISC  =0;          //Configuración del puerto E como Salida
+  TRISC  = 0;       //Configuración del puerto E como Salida
   /* Configuración de timer 0 */
   T0CON=0b00000111; /*Configuración del timer0 correspondiente 
                      * a un tiempo aproximado de 0.5seg usando la ecuación
@@ -58,13 +56,11 @@ void main(void) {
           
         SCS1=1;
         SCS0=0;
-        contador=0;
           
       }
       else{
         SCS1=0;
         SCS0=0;
-        contador=0;
       }
       if(RB0==1){
           LED_CPU=0;
@@ -76,7 +72,6 @@ void main(void) {
       }
       
   }
-    return;
 }
 /* Función de interrupción */
 void __interrupt () ISR (void){ //Interrupción
